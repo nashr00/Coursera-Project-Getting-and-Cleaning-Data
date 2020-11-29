@@ -13,7 +13,7 @@ For each record in the dataset it is provided:
 - Its activity label.
 - An identifier of the subject who carried out the experiment.
 
-### The R script called `run_analysis.R` does the following:
+### The R script does the following:
 1. Merges the training and the test sets to create one data set.
 2. Extracts only the measurements on the mean and standard deviation for each measurement.
 3. ses descriptive activity names to name the activities in the data set
