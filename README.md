@@ -9,3 +9,4 @@ The repository consists of:
 4) a README.md in the repo with your scripts. This repo explains how all of the scripts work and how they are connected.
 
 The script: `run_analysis.R`
+The tidy dataset: `tidy_data.txt`
