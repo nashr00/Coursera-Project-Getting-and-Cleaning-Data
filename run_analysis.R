@@ -1,4 +1,4 @@
-# 1. Load packages and get the data
+# Load packages and get the data
 packages <- c("data.table", "reshape2")
 sapply(packages, require, character.only=TRUE, quietly=TRUE)
 path <- getwd()
@@ -6,7 +6,7 @@ url <- "https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR
 download.file(url, file.path(path, "dataFiles.zip"))
 unzip(zipfile = "dataFiles.zip")
 
-# 2. Load activity labels and features
+# Load activity labels and features
 activityLabels <- fread(file.path(path, "UCI HAR Dataset/activity_labels.txt")
                         , col.names = c("classLabels", "activityName"))
 features <- fread(file.path(path, "UCI HAR Dataset/features.txt")
@@ -15,7 +15,7 @@ featuresWanted <- grep("(mean|std)\\(\\)", features[, featureNames])
 measurements <- features[featuresWanted, featureNames]
 measurements <- gsub('[()]', '', measurements)
 
-# 3. Load train datasets
+# Load train datasets
 train <- fread(file.path(path, "UCI HAR Dataset/train/X_train.txt"))[, featuresWanted, with = FALSE]
 data.table::setnames(train, colnames(train), measurements)
 trainActivities <- fread(file.path(path, "UCI HAR Dataset/train/Y_train.txt")
@@ -24,7 +24,7 @@ trainSubjects <- fread(file.path(path, "UCI HAR Dataset/train/subject_train.txt"
                        , col.names = c("SubjectNum"))
 train <- cbind(trainSubjects, trainActivities, train)
 
-# 4. Load test datasets
+# Load test datasets
 test <- fread(file.path(path, "UCI HAR Dataset/test/X_test.txt"))[, featuresWanted, with = FALSE]
 data.table::setnames(test, colnames(test), measurements)
 testActivities <- fread(file.path(path, "UCI HAR Dataset/test/Y_test.txt")
@@ -33,10 +33,10 @@ testSubjects <- fread(file.path(path, "UCI HAR Dataset/test/subject_test.txt")
                       , col.names = c("SubjectNum"))
 test <- cbind(testSubjects, testActivities, test)
 
-# 5. Merge datasets
+# Merge datasets
 combined <- rbind(train, test)
 
-# 6. Convert classLabels to activityName basically. More explicit. 
+# Convert classLabels to activityName basically. More explicit. 
 combined[["Activity"]] <- factor(combined[, Activity]
                                  , levels = activityLabels[["classLabels"]]
                                  , labels = activityLabels[["activityName"]])
